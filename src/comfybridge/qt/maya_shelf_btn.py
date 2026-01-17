@@ -53,13 +53,16 @@ try:
 
     env = os.environ.copy()
 
-    # Clean up env vars that may interfere with venv
-    for k in ("PYTHONHOME", "PYTHONPATH", "PYTHONUSERBASE"):
+
+    for k in ("PYTHONHOME", "PYTHONUSERBASE"):
         env.pop(k, None)
 
-    # Make the venv “win” in PATH resolution
+  
+    src_root = os.path.join(project_root_fs, "src")
+    env["PYTHONPATH"] = src_root  # or: src_root + os.pathsep + existing if you truly need it
+
     env["VIRTUAL_ENV"] = os.path.join(project_root_fs, "_venv")
-    env["PATH"] = venv_scripts + os.pathsep + env.get("PATH", "")
+    env["PATH"] = os.path.join(env["VIRTUAL_ENV"], "Scripts") + os.pathsep + env.get("PATH", "")
     env["COMFYBRIDGE_ROOT"] = project_root_fs
 
     # prevents user site-packages from interfering
