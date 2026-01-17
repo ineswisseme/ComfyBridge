@@ -22,7 +22,7 @@ The default install is for GPU usage. To install the CPU version add --cpu at th
 
 Uninstall deletes the .venv files.
 
-- Open Maya 2026, drag-and-drop the following script in any shelf of your choice:
+- Open Maya 2026, drag-and-drop the following script into the script editor, then with middle mouse button drag it in any shelf of your choice:
 
   C:\Users\<UserName>\Documents\maya\2026\scripts\ComfyBridge\src\comfybridge\qt\maya_shelf_btn.py
 
