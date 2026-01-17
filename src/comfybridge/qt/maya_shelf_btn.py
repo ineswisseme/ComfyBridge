@@ -38,34 +38,48 @@ except Exception as e:
     raise
 
 
-# Launch external viewer using _venv (pythonw.exe)
 
+# Launch external viewer using venv python.exe + add logs for debugging.
 try:
-    venv_pythonw = os.path.join(project_root_fs, "_venv", "Scripts", "pythonw.exe")
-    venv_python = os.path.join(project_root_fs, "_venv", "Scripts", "python.exe")
+    venv_scripts = os.path.join(project_root_fs, "_venv", "Scripts")
+    venv_python  = os.path.join(venv_scripts, "python.exe")
+    viewer_py    = os.path.join(project_root_fs, "src", "comfybridge", "qt", "viewer_GUI.py")
+    log_path     = os.path.join(project_root_fs, "viewer_launch.log")
 
-    viewer_py = os.path.join(project_root_fs, "src", "comfybridge", "qt", "viewer_GUI.py")
-
+    if not os.path.isfile(venv_python):
+        raise RuntimeError(f"Venv python not found: {venv_python}")
     if not os.path.isfile(viewer_py):
         raise RuntimeError(f"viewer_GUI.py not found at: {viewer_py}")
 
-    # get correct venv python if not fallback to python.exe
-    py_exec = venv_pythonw if os.path.isfile(venv_pythonw) else venv_python
-    if not os.path.isfile(py_exec):
-        raise RuntimeError(
-            "ComfyBridge venv python not found, check install.\n"
-            f"Expected: {venv_pythonw} or {venv_python}"
-        )
-
-    # pass project root via env var so external app can resolve paths
     env = os.environ.copy()
+
+    # Clean up env vars that may interfere with venv
+    for k in ("PYTHONHOME", "PYTHONPATH", "PYTHONUSERBASE"):
+        env.pop(k, None)
+
+    # Make the venv “win” in PATH resolution
+    env["VIRTUAL_ENV"] = os.path.join(project_root_fs, "_venv")
+    env["PATH"] = venv_scripts + os.pathsep + env.get("PATH", "")
     env["COMFYBRIDGE_ROOT"] = project_root_fs
 
-    subprocess.Popen([py_exec, viewer_py], cwd=project_root_fs, env=env)
-    print("[ComfyBridge] Image viewer launched.")
+    # prevents user site-packages from interfering
+    env["PYTHONNOUSERSITE"] = "1"
+
+    with open(log_path, "w", encoding="utf-8") as log:
+        subprocess.Popen(
+            [venv_python, viewer_py],
+            cwd=project_root_fs,
+            env=env,
+            stdout=log,
+            stderr=log,
+            creationflags=subprocess.CREATE_NO_WINDOW,  
+        )
+
+    print(f"[ComfyBridge] Image viewer launched. Log: {log_path}")
 
 except Exception as e:
     cmds.warning(f"[ComfyBridge] Failed to launch viewer: {e}")
+
 
 
 # Launch toolbar_viewer.py
