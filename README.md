@@ -2,6 +2,7 @@
 
 This plug-in is designed to run on Maya 2026. Previous versions aren't supported.
 Minimum GPU RAM required is 8GB, however you can install and run it as CPU only. 
+Python 3.11 and above required.
 
 # How to Install:
 
