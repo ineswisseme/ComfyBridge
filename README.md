@@ -8,6 +8,8 @@ Minimum GPU RAM required is 8GB, however you can install and run it as CPU only.
 - Download the ZIP file and extract to:
 ```
     C:\Users\<UserName>\Documents\maya\2026\scripts
+
+Make sure the path is C:\Users\<UserName>\Documents\maya\2026\scripts\ComfyBridge\<repo content>
 ```
 - Run install in windows cmd:
 ```
