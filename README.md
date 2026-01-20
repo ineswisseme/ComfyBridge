@@ -4,7 +4,7 @@ This plug-in is designed to run on Maya 2026. Previous versions aren't supported
 Minimum GPU RAM required is 8GB, however you can install and run it as CPU only. 
 Python 3.11 and above required.
 
-This plug-in uses [TripoSR] (https://github.com/VAST-AI-Research/TripoSR) to generate the 3D model. 
+This plug-in uses **TripoSR** (https://github.com/VAST-AI-Research/TripoSR) to generate the 3D model. 
 
 # How to Install:
 
