@@ -43,5 +43,13 @@ This plug-in use TripoSR to generate the 3D object in the image. TripoSR is a li
 ```
     C:\Users\<UserName>\Documents\maya\2026\scripts\ComfyBridge\src\comfybridge\models\TripoSR\run.py
 ```
+# Use rendered image inside ComfyUI: 
+
+You can use the final product of this plug-in to re-generate the original image inside ComfyUI following this template:
+
+
+<img width="1621" height="915" alt="ComfyBridge_ComfyUI_Example" src="https://github.com/user-attachments/assets/37186bbb-fa5e-4b82-b541-63f3f05be38b" />
+
+In this template we use SAM 3 to create a mask of the targeted object, and flux-fill-dev to re-generate a specific part of the image using text and visual guidance. 
 
 Enjoy!
